@@ -3,10 +3,8 @@
 #
 # @file
 # @version 0.1
-
+CFLAGS = -Wall -Wextra -O2 -std=c99  -pedantic
+OUT = cbf
 cbf: cbf.c
-	cc -o cbf cbf.c
-
-release: cbf.c
-	cc -o cbf cbf.c -O3
+	cc -o $(OUT) cbf.c $(CFLAGS)
 # end
