@@ -1,0 +1,3 @@
+#+TITLE: A really stupid implementation of brainfuck.
+
+* There are better implementations out there go use them
