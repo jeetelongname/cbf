@@ -7,8 +7,29 @@
 #include "cbf.h"
 
 int cellArr[3200];
+int *ptr = cellArr;
 
-char *clean(char *buffer) { return buffer; }
+char *clean(char *buffer) {
+  int len = strlen(buffer);
+  for (int i = 0; i != len; i++) {
+    if (buffer[i] != '<' && buffer[i] != '>' && buffer[i] != '+' &&
+        buffer[i] != '-' && buffer[i] != '[' && buffer[i] != ']' &&
+        buffer[i] != '.' && buffer[i] != ',') {
+      buffer[i] = '\1';
+    }
+  }
+  printf("%s", buffer);
+  return buffer;
+}
+
+int eval(char *buffer) {
+  for (int i = 0; buffer[i]; i++) {
+    printf("%c\n", buffer[i]);
+  }
+
+  free(buffer); // free the memory like a good boy
+  return 0;
+}
 
 char *read_file(char *file_name) {
   int file_size;
@@ -41,7 +62,7 @@ char *read_file(char *file_name) {
   return clean(buffer);
 }
 
-char *read_stdin() {
+char *read_stdin(void) {
   ssize_t cap = 4096, /* Initial capacity for the char buffer */
       len = 0;        /* Current offset of the buffer */
   char *buffer = malloc(cap * sizeof(char));
@@ -66,13 +87,6 @@ char *read_stdin() {
   buffer[len] = '\0';
 
   return clean(buffer);
-}
-
-int eval(char *buffer) {
-  printf("%s\n", buffer);
-
-  free(buffer); // free the memory like a good boy
-  return 0;
 }
 
 int main(int argc, char **argv) {
