@@ -6,9 +6,6 @@
 
 #include "cbf.h"
 
-int cellArr[3200];
-int *ptr = cellArr;
-
 char *clean(char *buffer) {
   int len = strlen(buffer);
   for (int i = 0; i != len; i++) {
@@ -18,13 +15,38 @@ char *clean(char *buffer) {
       buffer[i] = '\1';
     }
   }
-  printf("%s", buffer);
   return buffer;
 }
 
 int eval(char *buffer) {
+  int *ptr, cellArr[3200] = {0};
+  ptr = cellArr;
+
   for (int i = 0; buffer[i]; i++) {
-    printf("%c\n", buffer[i]);
+
+    switch (buffer[i]) {
+    case '<':
+      --ptr;
+      break;
+    case '>':
+      ++ptr;
+      break;
+    case '-':
+      --*ptr;
+      break;
+    case '+':
+      ++*ptr;
+      break;
+    case '.':
+      putchar(*ptr + 12);
+      break;
+    case ',': // FIXME: I don't know why this is not getting input
+      printf("%d\n", (int)getchar());
+      break;
+
+    default:
+      continue;
+    }
   }
 
   free(buffer); // free the memory like a good boy
@@ -99,10 +121,10 @@ int main(int argc, char **argv) {
       exit = eval(read_file(argv[1]));
   } else if (argc < 2) {
     exit = 1;
-    puts("To few arguments");
+    perror("To few arguments");
   } else {
     exit = 1;
-    puts("To many arguments");
+    perror("To many arguments");
   }
   return exit;
 }
