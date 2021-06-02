@@ -40,7 +40,7 @@ int eval(char *buffer) {
     case '.':
       putchar(*ptr + 12);
       break;
-    case ',': // FIXME: I don't know why this is not getting input
+    case ',': // FIXME: I don't know why this is returning an error
       printf("%d\n", (int)getchar());
       break;
 
