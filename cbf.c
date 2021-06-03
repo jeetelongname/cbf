@@ -6,6 +6,7 @@
 
 #include "cbf.h"
 
+/* removes all non valid characters */
 char *clean(char *buffer) {
   int len = strlen(buffer);
   for (int i = 0; i != len; i++) {
@@ -41,7 +42,9 @@ int eval(char *buffer) {
       putchar(*ptr + 12);
       break;
     case ',': // FIXME: I don't know why this is returning an error
-      printf("%d\n", (int)getchar());
+      puts("\n");
+      *ptr = (int)(fgetc(stdin));
+      putchar(*ptr + 12);
       break;
 
     default:
@@ -49,10 +52,14 @@ int eval(char *buffer) {
     }
   }
 
+  for (int j = 0; j != 5; j++) {
+    printf("%d: %d\n", j, cellArr[j]);
+  }
   free(buffer); // free the memory like a good boy
   return 0;
 }
 
+/* reads from provided filename and returns a cleaned buffer */
 char *read_file(char *file_name) {
   int file_size;
   FILE *fp;
@@ -84,6 +91,7 @@ char *read_file(char *file_name) {
   return clean(buffer);
 }
 
+/* reads stdin and returns a cleaned buffer */
 char *read_stdin(void) {
   ssize_t cap = 4096, /* Initial capacity for the char buffer */
       len = 0;        /* Current offset of the buffer */
